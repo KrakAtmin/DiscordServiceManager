@@ -2,15 +2,16 @@ import discord
 import subprocess
 from embed import *
 import os
+from dotenv import load_dotenv
 
-
+load_dotenv()
 
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 
-CHANNEL = 'serverterminal'
-users = ['VANILLUS#6709', 'Sixcess#2137']
+CHANNEL = os.getenv('CHANNEL')
+USERS = os.getenv('USERS')
 
 @client.event
 async def on_ready():
@@ -23,7 +24,7 @@ async def on_message(message):
         return
     if message.author == client.user:
         return
-    if str(message.author) not in users:
+    if str(message.author) not in USERS:
         return
 
     match message.content:
@@ -51,9 +52,6 @@ async def on_message(message):
             return
         
 async def checkIfProcessRunning(processName):
-    '''
-    Check if there is any running process that contains the given name processName.
-    '''
     status = subprocess.check_output("systemctl show -p ActiveState --value " + processName + 'server', shell=True)
     if "inactive" in str(status):
         return False
@@ -61,4 +59,4 @@ async def checkIfProcessRunning(processName):
         return True
  
 
-client.run(os.getenv('TOKEN'))
+client.run(os.getenv('BOT_TOKEN'))
