@@ -62,4 +62,3 @@ async def checkIfProcessRunning(processName):
  
 
 client.run(os.getenv('TOKEN'))
-# client.run('MTA5NTY5NjgzMDkyODUxOTE4OA.GJi49X.R07qi6r-pVfCQdzGYendoSUhcKWg8foIepxjtg')
